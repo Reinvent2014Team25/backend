@@ -6,7 +6,7 @@ var DataSchema   = new Schema({
     event: String,
     email: String,
     optin: Boolean,
-    amount: Integer
+    amount: String
 });
 
 module.exports = mongoose.model('Data', DataSchema);
