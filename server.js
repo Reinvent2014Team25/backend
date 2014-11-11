@@ -46,12 +46,13 @@ router.get('/', function(req, res) {
 // ----------------------------------------------------
 router.route('/data')
 
-    // create a bear (accessed at POST http://localhost:8080/api/data)
+    // create a data object (accessed at POST http://localhost:8080/api/data)
     .post(function(req, res) {
 
         var data = new Data();      // create a new instance of the Data model
-        data.name = req.body.name;  // set the data name (comes from the request)
-
+        // set the data parameters (comes from the request)
+        if(req.body.name) {data.name = req.body.name};
+        if(req.body.event) {data.event = req.body.event};
         // save the data and check for errors
         data.save(function(err) {
             if (err)
@@ -59,8 +60,18 @@ router.route('/data')
 
             res.json({ message: 'Data created!' });
         });
+    })
 
+    // get all the data objects (accessed at GET http://localhost:8080/api/data)
+    .get(function(req, res) {
+        Data.find(function(err, data) {
+            if (err)
+                res.send(err);
+
+            res.json(data);
+        });
     });
+
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
