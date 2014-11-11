@@ -53,6 +53,9 @@ router.route('/data')
         // set the data parameters (comes from the request)
         if(req.body.name) {data.name = req.body.name};
         if(req.body.event) {data.event = req.body.event};
+        if(req.body.email) {data.email = req.body.email};
+        if(req.body.optin) {data.optin = req.body.optin};
+        if(req.body.amount) {data.amount = req.body.amount};
         // save the data and check for errors
         data.save(function(err) {
             if (err)
