@@ -19,7 +19,7 @@ var port = process.env.PORT || 8080;        // set our port
 
 // connect to the database.
 var mongoose   = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/hackathon'); // connect to our database
+mongoose.connect('mongodb://172.31.0.30:27017/hackathon'); // connect to our database
 
 // Data model.
 var Data = require('./app/models/data');
