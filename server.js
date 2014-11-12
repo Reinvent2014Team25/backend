@@ -23,6 +23,8 @@ mongoose.connect('mongodb://localhost:27017/hackathon'); // connect to our datab
 
 // Data model.
 var Data = require('./app/models/data');
+var Events = require('./app/models/event');
+
 
 
 
@@ -44,7 +46,7 @@ router.get('/', function(req, res) {
 
 // more routes for our API will happen here
 
-// on routes that end in /bears
+// on routes that end in /data
 // ----------------------------------------------------
 router.route('/data')
 
@@ -77,6 +79,36 @@ router.route('/data')
         });
     });
 
+// on routes that end in /events
+// ----------------------------------------------------
+router.route('/events')
+
+    // create a data object (accessed at POST http://localhost:8080/api/events)
+    .post(function(req, res) {
+
+        var events = new Events();      // create a new instance of the Events model
+        // set the data parameters (comes from the request)
+        if(req.body.name) {events.name = req.body.name};
+        if(req.body.time) {events.time = req.body.time};
+        if(req.body.date) {events.date = req.body.date};
+        // save the data and check for errors
+        events.save(function(err) {
+            if (err)
+                res.send(err);
+
+            res.json({ message: 'Data created!' });
+        });
+    })
+
+    // get all the data objects (accessed at GET http://localhost:8080/api/data)
+    .get(function(req, res) {
+        Events.find(function(err, data) {
+            if (err)
+                res.send(err);
+
+            res.json(data);
+        });
+    });
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
