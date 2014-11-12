@@ -105,8 +105,22 @@ router.route('/events')
         Events.find(function(err, data) {
             if (err)
                 res.send(err);
+            var eventname = req.query.name;
+            if(!eventname)
+            {
+                res.json(data);
+            }
+            else
+            {
+                console.log("Queried for all events with name like: " + eventname);
+                Events.find({"name" : eventname}, function(err, result) {
+                    if(err)
+                        res.send(err);
+                    console.log("Query results: " + result);
+                    res.json(result);
+                })
+            }
 
-            res.json(data);
         });
     });
 
